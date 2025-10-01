@@ -43,8 +43,8 @@ export default function Page() {
           <Score score={score} />
         )}
       </div>
-      <footer className="mt-10 text-xs text-gray-500 text-center">
-        &copy; {new Date().getFullYear()} Sentient AGI Quiz. 
+      <footer className="mt-15 md:mt-10  text-xs text-gray-500 text-center">
+        &copy; {new Date().getFullYear()} Sentient AGI Quiz Created by {"Maharshi"}.
       </footer>
     </div>
   );
