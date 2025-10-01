@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import Quiz from "@/components/Quiz";
-import Score from "@/components/Score";
+import Quiz from "@/components/quiz";
+import Score from "@/components/score";
 
 export default function Page() {
   const [started, setStarted] = useState(false);
