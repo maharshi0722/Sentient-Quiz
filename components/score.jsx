@@ -11,7 +11,7 @@ export default function Score({ score }) {
           {score} / 15
         </div>
         <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-700 text-center items-center mb-4">
-          {score >= 12
+          {score >= 15  
             ? "You’re AGI ready! 🎉"
             : "Keep learning about Sentient AGI! 🚀"}
         </p>

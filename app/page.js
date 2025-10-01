@@ -9,7 +9,7 @@ export default function Page() {
   const [score, setScore] = useState(0);
 
   return (
-    <div className="min-h-screen  flex flex-col gap-16 md:gap-15 items-center justify-start bg-gradient-to-br from-[#f5f3ff] via-[#e0e7ff] to-[#dbeafe] p-4">
+    <div className="min-h-screen  flex flex-col gap-14 md:gap-18 items-center justify-start bg-gradient-to-br from-[#f5f3ff] via-[#e0e7ff] to-[#dbeafe] p-4">
       <h1 className="text-3xl md:text-6xl font-extrabold text-indigo-700 mt-8 mb-8 drop-shadow-lg text-center">
         Sentient AGI Quiz
       </h1>
