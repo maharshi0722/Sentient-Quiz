@@ -1,103 +1,94 @@
-import Image from "next/image";
+"use client";
+import { useState } from "react";
+import Quiz from "@/components/quiz";
+import Score from "@/components/score";
 
-export default function Home() {
+import { Poppins } from "next/font/google";
+const poppins = Poppins({ subsets: ["latin"], weight: ["700"] });
+
+export default function Page() {
+  const [started, setStarted] = useState(false);
+  const [finished, setFinished] = useState(false);
+  const [score, setScore] = useState(0);
+  const [quizKey, setQuizKey] = useState(0);
+
+  const handleFinish = (finalScore) => {
+    setScore(finalScore);
+    setFinished(true);
+  };
+
+  const handleRestart = () => {
+    setScore(0);
+    setFinished(false);
+    setStarted(true);
+    setQuizKey((prev) => prev + 1);
+  };
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div
+      className="min-h-screen flex flex-col items-center justify-start relative overflow-auto px-4 py-8"
+      style={{
+        backgroundImage: "url('/agi.png')", 
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-indigo-100/30 to-indigo-400/40 backdrop-blur-md" />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+      <div className="relative z-10 flex flex-col items-center justify-start w-full max-w-3xl gap-6 md:gap-10">
+        <header className="flex items-center justify-center text-center mt-6 mb-8">
+          <div className="flex items-center gap-4 px-6 py-3 rounded-2xl bg-white/70 backdrop-blur-xl shadow-xl transition-all duration-300 hover:shadow-indigo-300/80">
+            <img
+              src="https://pbs.twimg.com/profile_images/1859727094789660672/h7RM1LNu_400x400.jpg"
+              alt="Sentient AGI Logo"
+              className="w-10 h-10 md:w-14 md:h-14 rounded-full shadow-md animate-pulse-blink"
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+            <h1
+              className={`${poppins.className} text-2xl md:text-4xl lg:text-5xl font-extrabold`}
+            >
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-indigo-700 to-teal-500">
+                Sentient
+              </span>
+              <span className="text-indigo-900"> </span>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-500 to-indigo-700">
+                Quiz
+              </span>
+            </h1>
+          </div>
+        </header>
+
+        <div className="w-full flex flex-col items-center justify-center">
+          {!started ? (
+            <div className="bg-white/60 backdrop-blur-xl border border-indigo-100/40 shadow-2xl rounded-3xl p-8 md:p-12 flex flex-col items-center text-center transition-all hover:shadow-indigo-200/60">
+              <h2 className="text-2xl md:text-3xl font-semibold text-indigo-700 mb-4">
+                Welcome to the Sentient AGI Quiz!
+              </h2>
+              <p className="text-gray-700 mb-8 text-lg leading-relaxed">
+                Explore your understanding of Sentient AGI and its GRID.
+                <br />
+                You’ll face 10 thought-provoking questions.
+                <br />
+                Ready to challenge your intelligence?
+              </p>
+              <button
+                onClick={() => setStarted(true)}
+                className="px-8 py-3 text-white text-lg font-bold bg-gradient-to-r from-purple-600 to-indigo-800 rounded-full shadow-lg hover:scale-105 hover:shadow-indigo-400/50 transition-transform"
+              >
+                🚀 Start Quiz
+              </button>
+            </div>
+          ) : !finished ? (
+            <Quiz key={quizKey} numQuestions={10} onFinish={handleFinish} />
+          ) : (
+            <Score score={score} onRestart={handleRestart} />
+          )}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+
+        <footer className="mt-8 text-xs text-gray-700 text-center">
+          &copy; {new Date().getFullYear()} Sentient AGI Quiz — Built by Maharshi
+        </footer>
+      </div>
     </div>
   );
 }
